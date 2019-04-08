@@ -179,22 +179,22 @@ Describe 'updating kb article' {
         'InstanceName' = 'instance'
         'Credential' = $DummyCreds
     }
+    
+    Context 'Using object returned from Get-ServiceNowKB as KBObject' {
+        it ' Trying to update kb with no sys_id should fail' {
+            $KBObj = New-Object -TypeName psobject -Property @{
+                'a_property' = 'a_value'
+            }
+            { Set-ServiceNowKB @KBSplat -ServiceNowObject $KBObj } | Should -Throw
+        }
 
-    it ' Trying to update kb with no sys_id should fail' {
-        $KBObj = New-Object -TypeName psobject -Property @{
-            'a_property' = 'a_value'
+        it ' Trying to update kb with bad sys_id should fail' {
+            $KBObj = New-Object -TypeName psobject -Property @{
+                'sys_id' = 'badSysId'
+            }
+            { Set-ServiceNowKB @KBSplat -ServiceNowObject $KBObj } | Should -Throw
         }
-        { Set-ServiceNowKB @KBSplat -ServiceNowObject $KBObj } | Should -Throw
-    }
     
-    it ' Trying to update kb with bad sys_id should fail' {
-        $KBObj = New-Object -TypeName psobject -Property @{
-            'sys_id' = 'badSysId'
-        }
-        { Set-ServiceNowKB @KBSplat -ServiceNowObject $KBObj } | Should -Throw
-    }
-    
-    Context 'Using object returned from Get-ServiceNowKB' {
         $Actual = Set-ServiceNowKB @KBSplat -ServiceNowObject $MockObject.result
 
         it 'Endpoint should be constructed ok' {
@@ -203,6 +203,19 @@ Describe 'updating kb article' {
 
         it 'Body should be a byte array' {
             $actual.Body | Should -BeOfType [Byte]
+        }
+    }
+
+    Context 'Updating a single value' {
+        $Expected = '123,34,116,101,120,116,34,58,34,116,101,120,116,34,125'
+        $Actual = Set-ServiceNowKB @KBSplat -Field 'text' -Text 'text'
+
+        it 'Body should be a byte array' {
+            $actual.Body | Should -BeOfType [Byte]
+        }
+        
+        it 'Body bytearray should be correct' {
+            ($Actual.Body -join ',') | Should -Be $Expected
         }
     }
 }
