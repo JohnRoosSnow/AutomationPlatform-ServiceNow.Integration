@@ -28,13 +28,13 @@ task TestCode {
 
 task CopyFiles {
     $null = New-Item -Path "$BuildRoot\bin\$ModuleName" -ItemType Directory
-    Copy-Item -Path "$BuildRoot\*.psd1" -Destination "$BuildRoot\bin\$ModuleName"
+    Copy-Item -Path "$BuildRoot\$ModuleName\*.psd1" -Destination "$BuildRoot\bin\$ModuleName\$ModuleName.psd1"
     Get-ChildItem -Path "$BuildRoot\license*" | Copy-Item -Destination "$BuildRoot\bin\$ModuleName"
 }
 
 task CompilePSM {
-    $PrivatePath = "$BuildRoot\Private\*.ps1"
-    $PublicPath  = "$BuildRoot\Public\*.ps1"
+    $PrivatePath = "$BuildRoot\$ModuleName\Private\*.ps1"
+    $PublicPath  = "$BuildRoot\$ModuleName\Public\*.ps1"
     Merge-ModuleFiles -Path $PrivatePath,$PublicPath -OutputPath "$BuildRoot\bin\$ModuleName\$ModuleName.psm1"
 
     $PublicScriptBlock = Get-ScriptBlockFromFile -Path $PublicPath
@@ -54,7 +54,7 @@ task CompilePSM {
         $UpdateManifestParam['AliasesToExport'] = $PublicAlias
     }
 
-    $UpdateManifestParam['ModuleVersion'] = $env:APPVEYOR_BUILD_VERSION
+    $UpdateManifestParam['ModuleVersion'] = '1.1.1' #$env:APPVEYOR_BUILD_VERSION
 
     $ExportStrings = 'Export-ModuleMember',$PublicFunctionParam,$PublicAliasParam | Where-Object {-Not [string]::IsNullOrWhiteSpace($_)}
     $ExportStrings -join ' ' | Out-File -FilePath  "$BuildRoot\bin\$ModuleName\$ModuleName.psm1" -Append -Encoding UTF8

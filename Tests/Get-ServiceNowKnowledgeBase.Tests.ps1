@@ -1,4 +1,5 @@
 $FunctionName = 'Get-ServiceNowKnowledgeBase'
+$ModuleRoot = "$PSScriptRoot\..\Snow.SnowAutomationPlatform.ServiceNow.Integration"
 
 Describe 'Import function tests' -Tag 'PreBuild' {
     It 'Function should not be loaded' {
@@ -6,12 +7,12 @@ Describe 'Import function tests' -Tag 'PreBuild' {
         { Get-Command $FunctionName -ErrorAction Stop } | Should -Throw
     }
     It 'Function should load when dot sourcing file' {
-        . $PSScriptRoot\..\Public\Get-ServiceNowKnowledgeBase.ps1
+        . $ModuleRoot\Public\Get-ServiceNowKnowledgeBase.ps1
         (Get-Command $FunctionName).Name | Should -Be $FunctionName
     }
 }
 
-. $PSScriptRoot\..\Public\Get-ServiceNowKnowledgeBase.ps1
+. $ModuleRoot\Public\Get-ServiceNowKnowledgeBase.ps1
 
 Describe 'Parameters' {
     $ActualParameters = (Get-Command Get-ServiceNowKnowledgeBase).Parameters

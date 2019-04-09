@@ -1,5 +1,5 @@
-$moduleRoot = Resolve-Path "$PSScriptRoot\.."
-$moduleName = 'AutomationPlatform-ServiceNow.Integration'
+$moduleRoot = Resolve-Path "$PSScriptRoot\..\Snow.SnowAutomationPlatform.ServiceNow.Integration"
+$moduleName = 'Snow.SnowAutomationPlatform.ServiceNow.Integration'
 
 Describe "General project validation: $moduleName" {
 
