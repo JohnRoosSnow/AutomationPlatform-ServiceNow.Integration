@@ -1,5 +1,5 @@
 $moduleRoot = Resolve-Path "$PSScriptRoot\.."
-$moduleName = Split-Path $moduleRoot -Leaf
+$moduleName = 'AutomationPlatform-ServiceNow.Integration'
 
 Describe "General project validation: $moduleName" {
 
