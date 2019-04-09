@@ -6,12 +6,12 @@ Describe 'Import function tests' -Tag 'PreBuild' {
         { Get-Command $FunctionName -ErrorAction Stop } | Should -Throw
     }
     It 'Function should load when dot sourcing file' {
-        . ..\Public\$($FunctionName).ps1
+        . $PSScriptRoot\..\Public\$($FunctionName).ps1
         (Get-Command $FunctionName).Name | Should -Be $FunctionName
     }
 }
 
-. ..\Public\$($FunctionName).ps1
+. $PSScriptRoot\..\Public\$($FunctionName).ps1
 
 Describe 'Parameters' {
     $ActualParameters = (Get-Command $FunctionName).Parameters
@@ -85,8 +85,6 @@ Describe 'Parameters' {
         $ActualParameters[$ParamName].ParameterSets.Keys | Should -Contain $ParameterSet
     }
 }
-
-. ..\Public\Set-ServiceNowKB.ps1
 
 $MockObject = @'
 {
@@ -210,14 +208,14 @@ Describe 'updating kb article' {
     }
     
     Context 'Using object returned from Get-ServiceNowKB as KBObject' {
-        it ' Trying to update kb with no sys_id should fail' {
+        it 'Trying to update kb with no sys_id should fail' {
             $KBObj = New-Object -TypeName psobject -Property @{
                 'a_property' = 'a_value'
             }
             { Set-ServiceNowKB @KBSplat -ServiceNowObject $KBObj } | Should -Throw
         }
 
-        it ' Trying to update kb with bad sys_id should fail' {
+        it 'Trying to update kb with bad sys_id should fail' {
             $KBObj = New-Object -TypeName psobject -Property @{
                 'sys_id' = 'badSysId'
             }

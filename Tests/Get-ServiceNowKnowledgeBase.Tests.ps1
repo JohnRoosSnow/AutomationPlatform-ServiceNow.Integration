@@ -6,12 +6,12 @@ Describe 'Import function tests' -Tag 'PreBuild' {
         { Get-Command $FunctionName -ErrorAction Stop } | Should -Throw
     }
     It 'Function should load when dot sourcing file' {
-        . ..\Public\Get-ServiceNowKnowledgeBase.ps1
+        . $PSScriptRoot\..\Public\Get-ServiceNowKnowledgeBase.ps1
         (Get-Command $FunctionName).Name | Should -Be $FunctionName
     }
 }
 
-. ..\Public\Get-ServiceNowKnowledgeBase.ps1
+. $PSScriptRoot\..\Public\Get-ServiceNowKnowledgeBase.ps1
 
 Describe 'Parameters' {
     $ActualParameters = (Get-Command Get-ServiceNowKnowledgeBase).Parameters

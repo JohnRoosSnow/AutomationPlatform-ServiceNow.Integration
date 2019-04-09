@@ -6,12 +6,12 @@ Describe 'Import function tests' -Tag 'PreBuild' {
         { Get-Command $FunctionName -ErrorAction Stop } | Should -Throw
     }
     It 'Function should load when dot sourcing file' {
-        . ..\Public\$($FunctionName).ps1
+        . $PSScriptRoot\..\Public\$($FunctionName).ps1
         (Get-Command $FunctionName).Name | Should -Be $FunctionName
     }
 }
 
-. ..\Public\$($FunctionName).ps1
+. $PSScriptRoot\..\Public\$($FunctionName).ps1
 
 Describe 'Parameters' {
     $ActualParameters = (Get-Command $FunctionName).Parameters
