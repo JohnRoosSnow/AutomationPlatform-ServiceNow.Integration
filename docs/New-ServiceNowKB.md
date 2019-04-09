@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-ServiceNowKB
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Crete a new KB Article in Service Now.
 
 ## SYNTAX
 
@@ -19,16 +19,29 @@ New-ServiceNowKB [-InstanceName] <String> [-Credential] <PSCredential> [-kb_know
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+This CmdLet lets you create a new KB article in Service now.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> $Splat = @{
+    'InstanceName'      = 'instance'
+    'Credential'        = $PSCredential
+    'kb_knowledge_base' = '12345678901234567890123456789012'
+    'u_category'        = 'KB_Article'
+    'u_application'     = '12345678901234567890123456789012'
+    'short_description' = 'short desc'
+    'text'              = '<b>this is text</b>'
+    'u_article_state'   = 'publish'
+}
+PS C:\> New-ServiceNowKB @Splat
 ```
 
-{{ Add example description here }}
+This command will create a new KB article in 'https://instance.service-now.com',
+It will imediately be published, with text and description as set,
+commected to the knowledgebase with sys_id 12345678901234567890123456789012
+and the application with sys_id 12345678901234567890123456789012
 
 ## PARAMETERS
 
@@ -66,7 +79,8 @@ Accept wildcard characters: False
 ```
 
 ### -kb_knowledge_base
-{{ Fill kb_knowledge_base Description }}
+The knowledge base sys_id to which the KB article will be connected.
+This id can be retrieved using the Get-ServiceNowKnowledgeBase CmdLet.
 
 ```yaml
 Type: String
@@ -81,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -short_description
-{{ Fill short_description Description }}
+Short description of what the KB article is about.
 
 ```yaml
 Type: String
@@ -96,7 +110,7 @@ Accept wildcard characters: False
 ```
 
 ### -text
-{{ Fill text Description }}
+Contents of the KB article. This field can be HTML formated, or clear text.
 
 ```yaml
 Type: String
@@ -111,7 +125,8 @@ Accept wildcard characters: False
 ```
 
 ### -u_application
-{{ Fill u_application Description }}
+The application sys_id to which the KB article will be connected.
+This can be retrieved using the Get-ServiceNowApplication CmdLet.
 
 ```yaml
 Type: String
@@ -126,7 +141,7 @@ Accept wildcard characters: False
 ```
 
 ### -u_article_state
-{{ Fill u_article_state Description }}
+The state the article will be in when created.
 
 ```yaml
 Type: String
@@ -142,7 +157,7 @@ Accept wildcard characters: False
 ```
 
 ### -u_category
-{{ Fill u_category Description }}
+The category connected to the KB article.
 
 ```yaml
 Type: String

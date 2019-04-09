@@ -8,7 +8,17 @@ schema: 2.0.0
 # Set-ServiceNowKB
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Update a service now KB article.---
+external help file: AutomationPlatform-ServiceNow.Integration-help.xml
+Module Name: AutomationPlatform-ServiceNow.Integration
+online version:
+schema: 2.0.0
+---
+
+# Set-ServiceNowKB
+
+## SYNOPSIS
+Update a service now KB article.
 
 ## SYNTAX
 
@@ -21,25 +31,35 @@ Set-ServiceNowKB -InstanceName <String> -Credential <PSCredential> -ServiceNowOb
 ### Field
 ```
 Set-ServiceNowKB -InstanceName <String> -Credential <PSCredential> -Field <String> -Text <String>
- [<CommonParameters>]
+ -sys_id <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+This CmdLet will update a service now KB article using either an object as returned from Get-ServiceNowKB 
+Or defining a field and value to update.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Set-ServiceNowKB -InstanceName Instance -Credential $PSCredential -Field text -Text 'Some new text' -sys_id '12345678901234567890123456789012'
 ```
 
-{{ Add example description here }}
+This command will change the text field to 'some new text' in the kb artice with sys_id 12345678901234567890123456789012
+
+### Example 2
+```powershell
+PS C:\> $a = Get-ServiceNowKB -QueryParameter 'Number' -QueryOperator '=' -QueryValue 'PROB123' -InstanceName 'MyInstance' -Credential $Creds
+PS C:\> $a.text = 'Some new text'
+PS C:\> Set-ServiceNowKB -InstanceName Instance -Credential $PSCredential -ServiceNowObject $a
+```
+
+This command will change the text field to 'some new text' in the kb artice returned by the Get-ServiceNowKB query.
 
 ## PARAMETERS
 
 ### -Credential
-{{ Fill Credential Description }}
+Credential allowed to read the Service Now API
 
 ```yaml
 Type: PSCredential
@@ -54,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -Field
-{{ Fill Field Description }}
+Field Name to update with new text
 
 ```yaml
 Type: String
@@ -69,7 +89,10 @@ Accept wildcard characters: False
 ```
 
 ### -InstanceName
-{{ Fill InstanceName Description }}
+The name of your Service Now instance. This is the first part of the ServiceNow URI.
+For example: 
+Your service now login page is https://MyServiceNowInstance.service-now.com
+Your InstanceName is MyServiceNowInstance
 
 ```yaml
 Type: String
@@ -84,7 +107,7 @@ Accept wildcard characters: False
 ```
 
 ### -ServiceNowObject
-{{ Fill ServiceNowObject Description }}
+ServiceNow object as returned by the Get-ServiceNowKB CmdLet
 
 ```yaml
 Type: PSObject
@@ -99,7 +122,22 @@ Accept wildcard characters: False
 ```
 
 ### -Text
-{{ Fill Text Description }}
+This text will replace the current value of the field parameter.
+
+```yaml
+Type: String
+Parameter Sets: Field
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -sys_id
+System ID of the article to update.
 
 ```yaml
 Type: String

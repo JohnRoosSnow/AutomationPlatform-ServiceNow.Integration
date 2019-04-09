@@ -28,19 +28,31 @@ function Set-ServiceNowKB {
         [Parameter(Mandatory=$True,
             ParameterSetName='Field'
         )]
-        [string]$Text
+        [string]$Text,
+        
+        [Parameter(Mandatory=$True,
+            ParameterSetName='Field'
+        )]
+        [ValidateScript({ $_ -match '[a-zA-Z0-9]{32}' })]
+        [string]$sys_id
     )
     
     begin {
-        $BaseUri = "https://$InstanceName.service-now.com/api/now/table/"
-        $Endpoint = "kb_knowledge/$($ServiceNowObject.Sys_id)"
-        [uri]$Uri = "$BaseUri$Endpoint"
-
         switch ($PSCmdlet.ParameterSetName) {
-            'Object' { [byte[]]$bBody = [System.Text.Encoding]::UTF8.GetBytes( ($ServiceNowObject | ConvertTo-Json -Compress) ) }
-            'Field' { [byte[]]$bBody = [System.Text.Encoding]::UTF8.GetBytes( ([psobject]@{$Field=$Text} | ConvertTo-Json -Compress)) }
+            'Object' { 
+                [byte[]]$bBody = [System.Text.Encoding]::UTF8.GetBytes( ($ServiceNowObject | ConvertTo-Json -Compress) ) 
+                $sysid = $ServiceNowObject.Sys_id
+            }
+            'Field' { 
+                [byte[]]$bBody = [System.Text.Encoding]::UTF8.GetBytes( ([psobject]@{$Field=$Text} | ConvertTo-Json -Compress)) 
+                $sysid = $sys_id
+            }
         }
         
+        $BaseUri = "https://$InstanceName.service-now.com/api/now/table/"
+        $Endpoint = "kb_knowledge/$sysid"
+        [uri]$Uri = "$BaseUri$Endpoint"
+
 
         $SetKBSplat = @{
             'uri' = $Uri

@@ -20,17 +20,38 @@ Describe 'Parameters' {
             'ParamName' = 'InstanceName'
             'ParamType' = 'String'
             'Mandatory' = 'True'
+            'ParameterSet' = '__AllParameterSets'
         }
         @{
             'ParamName' = 'Credential'
             'ParamType' = 'PSCredential'
             'Mandatory' = 'True'
+            'ParameterSet' = '__AllParameterSets'
         }
         @{
             'ParamName' = 'ServiceNowObject'
             'ParamType' = 'PSObject'
             'Mandatory' = 'True'
-        }   
+            'ParameterSet' = 'Object'
+        }
+        @{
+            'ParamName' = 'field'
+            'ParamType' = 'string'
+            'Mandatory' = 'True'
+            'ParameterSet' = 'Field'
+        }
+        @{
+            'ParamName' = 'text'
+            'ParamType' = 'string'
+            'Mandatory' = 'True'
+            'ParameterSet' = 'Field'
+        }
+        @{
+            'ParamName' = 'sys_id'
+            'ParamType' = 'string'
+            'Mandatory' = 'True'
+            'ParameterSet' = 'Field'
+        }
     )
 
     it '<ParamName> should exist' -TestCases $TestCases {
@@ -54,6 +75,14 @@ Describe 'Parameters' {
         )
         
         $ActualParameters[$ParamName].ParameterSets.Values.IsMandatory | Should -Be $Mandatory
+    }
+    it '<ParamName> parameterset should be <ParameterSet>' -TestCases $TestCases {
+        Param(
+            $ParamName,
+            $ParameterSet
+        )
+        
+        $ActualParameters[$ParamName].ParameterSets.Keys | Should -Contain $ParameterSet
     }
 }
 
@@ -208,7 +237,7 @@ Describe 'updating kb article' {
 
     Context 'Updating a single value' {
         $Expected = '123,34,116,101,120,116,34,58,34,116,101,120,116,34,125'
-        $Actual = Set-ServiceNowKB @KBSplat -Field 'text' -Text 'text'
+        $Actual = Set-ServiceNowKB @KBSplat -Field 'text' -Text 'text' -sys_id '12345678901234567890123456789012'
 
         it 'Body should be a byte array' {
             $actual.Body | Should -BeOfType [Byte]
@@ -216,6 +245,10 @@ Describe 'updating kb article' {
         
         it 'Body bytearray should be correct' {
             ($Actual.Body -join ',') | Should -Be $Expected
+        }
+        
+        it 'Endpoint should be constructed ok' {
+            $actual.uri | should -Be 'https://instance.service-now.com/api/now/table/kb_knowledge/12345678901234567890123456789012'
         }
     }
 }
