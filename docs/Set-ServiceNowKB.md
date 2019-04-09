@@ -8,12 +8,7 @@ schema: 2.0.0
 # Set-ServiceNowKB
 
 ## SYNOPSIS
-Update a service now KB article.---
-external help file: AutomationPlatform-ServiceNow.Integration-help.xml
-Module Name: AutomationPlatform-ServiceNow.Integration
-online version:
-schema: 2.0.0
----
+Update a service now KB article.
 
 # Set-ServiceNowKB
 
