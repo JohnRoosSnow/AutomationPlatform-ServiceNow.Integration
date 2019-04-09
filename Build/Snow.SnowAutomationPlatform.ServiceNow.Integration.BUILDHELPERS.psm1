@@ -19,7 +19,6 @@ function Merge-ModuleFiles {
 
         # Encoding of input-files
         [Parameter()]
-        [Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]
         $Encoding = 'UTF8'
     )
     process {
@@ -44,7 +43,6 @@ function Get-ScriptblockFromFile {
 
         # Encoding of input-files
         [Parameter()]
-        [Microsoft.PowerShell.Commands.FileSystemCmdletProviderEncoding]
         $Encoding = 'UTF8'
     )
     process {

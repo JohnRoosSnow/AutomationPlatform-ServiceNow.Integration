@@ -28,13 +28,13 @@ task TestCode {
 
 task CopyFiles {
     $null = New-Item -Path "$BuildRoot\bin\$ModuleName" -ItemType Directory
-    Copy-Item -Path "$BuildRoot\$ModuleName\*.psd1" -Destination "$BuildRoot\bin\$ModuleName"
+    Copy-Item -Path "$BuildRoot\*.psd1" -Destination "$BuildRoot\bin\$ModuleName"
     Get-ChildItem -Path "$BuildRoot\license*" | Copy-Item -Destination "$BuildRoot\bin\$ModuleName"
 }
 
 task CompilePSM {
-    $PrivatePath = "$BuildRoot\$ModuleName\Private\*.ps1"
-    $PublicPath  = "$BuildRoot\$ModuleName\Public\*.ps1"
+    $PrivatePath = "$BuildRoot\Private\*.ps1"
+    $PublicPath  = "$BuildRoot\Public\*.ps1"
     Merge-ModuleFiles -Path $PrivatePath,$PublicPath -OutputPath "$BuildRoot\bin\$ModuleName\$ModuleName.psm1"
 
     $PublicScriptBlock = Get-ScriptBlockFromFile -Path $PublicPath
