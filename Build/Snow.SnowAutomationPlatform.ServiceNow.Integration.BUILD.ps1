@@ -28,7 +28,7 @@ task TestCode {
 
 task CopyFiles {
     $null = New-Item -Path "$BuildRoot\bin\$ModuleName" -ItemType Directory
-    Copy-Item -Path "$BuildRoot\$ModuleName\*.psd1" -Destination "$BuildRoot\bin\$ModuleName\$ModuleName.psd1"
+    Copy-Item -Path "$BuildRoot\$ModuleName\*.psd1" -Destination "$BuildRoot\bin\$ModuleName"
     Get-ChildItem -Path "$BuildRoot\license*" | Copy-Item -Destination "$BuildRoot\bin\$ModuleName"
 }
 
@@ -54,7 +54,7 @@ task CompilePSM {
         $UpdateManifestParam['AliasesToExport'] = $PublicAlias
     }
 
-    $UpdateManifestParam['ModuleVersion'] = '1.1.1' #$env:APPVEYOR_BUILD_VERSION
+    $UpdateManifestParam['ModuleVersion'] = $env:APPVEYOR_BUILD_VERSION
 
     $ExportStrings = 'Export-ModuleMember',$PublicFunctionParam,$PublicAliasParam | Where-Object {-Not [string]::IsNullOrWhiteSpace($_)}
     $ExportStrings -join ' ' | Out-File -FilePath  "$BuildRoot\bin\$ModuleName\$ModuleName.psm1" -Append -Encoding UTF8
