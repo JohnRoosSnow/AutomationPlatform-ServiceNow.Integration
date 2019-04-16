@@ -187,8 +187,8 @@ $DummyCreds = New-Object System.Management.Automation.PSCredential('DummyUser', 
 $InvokeSplat = @{
     'InstanceName' = 'Instance'
     'Credential'   = $DummyCreds
-    'QueryParameter' = 'number'
-    'QueryValue' = 'KB1234567'
+    'QueryParameter' = 'file_name'
+    'QueryValue' = 'file.ext'
     'QueryOperator' = '='
 }
 
@@ -203,7 +203,7 @@ Describe 'Calling API' {
         $Actual = Get-ServiceNowAttachment @InvokeSplat 
         
         it 'Invoke should have correct parameters, URI' {
-            $Actual.Uri | Should -Be 'https://Instance.service-now.com/api/now/table/attachment?sysparm_limit=1&sysparm_query=number=KB1234567'
+            $Actual.Uri | Should -Be 'https://Instance.service-now.com/api/now/attachment?sysparm_limit=1&sysparm_query=file_name=file.ext'
         }
         it 'Invoke should have correct parameters, Method' {
             $Actual.Method | Should -Be 'Get'
@@ -215,22 +215,6 @@ Describe 'Calling API' {
             $Actual.Headers['accept'] | Should -Be 'application/json'
         }
         
-        Assert-VerifiableMock
-    }
-    
-    Context 'Searching for kb' { 
-        Mock Invoke-RestMethod -ParameterFilter {
-            $Uri -eq 'https://Instance.service-now.com/api/now/table/attachment?sysparm_limit=1&sysparm_query=number=KB1234567'
-        } -MockWith {
-            return $MockObject
-        } -Verifiable
-        
-        $Actual = Get-ServiceNowAttachment @InvokeSplat 
-        
-        it 'Searching should return one sys_id' {
-            $Actual.sys_id | Should -Be '00000000000000000000000000000005'
-        }
-
         Assert-VerifiableMock
     }
 }

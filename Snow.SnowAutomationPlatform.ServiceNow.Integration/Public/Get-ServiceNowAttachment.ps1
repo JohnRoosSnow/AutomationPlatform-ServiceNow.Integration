@@ -7,7 +7,7 @@ function Get-ServiceNowAttachment {
         [PSCredential]$Credential,
 
         [Parameter(Mandatory=$True)]
-        [ValidateSet('number','text','display_number','short_description','sys_id')]
+        [ValidateSet('file_name','sys_tags','sys_id')]
         [string]$QueryParameter,
 
         [Parameter(Mandatory=$True)]
@@ -25,7 +25,7 @@ function Get-ServiceNowAttachment {
         $KBQuery = "sysparm_query=$QueryParameter$QueryOperator$QueryValue"
         $KBLimit = "sysparm_limit=$Limit"
 
-        $BaseUri  = "https://$InstanceName.service-now.com/api/now/table/"
+        $BaseUri  = "https://$InstanceName.service-now.com/api/now/"
         $Endpoint = 'attachment'
 
         [Uri]$Uri = "$BaseUri$Endpoint`?$KBLimit&$KBQuery"
