@@ -28,7 +28,7 @@ function Set-ServiceNowKB {
         [Parameter(Mandatory=$True,
             ParameterSetName='Field'
         )]
-        [string]$Text,
+        $Value,
         
         [Parameter(Mandatory=$True,
             ParameterSetName='Field'
@@ -44,10 +44,12 @@ function Set-ServiceNowKB {
                 $sysid = $ServiceNowObject.Sys_id
             }
             'Field' { 
-                [byte[]]$bBody = [System.Text.Encoding]::UTF8.GetBytes( ([psobject]@{$Field=$Text} | ConvertTo-Json -Compress)) 
+                [byte[]]$bBody = [System.Text.Encoding]::UTF8.GetBytes( ([psobject]@{$Field=$Value} | ConvertTo-Json -Compress)) 
                 $sysid = $sys_id
             }
         }
+
+        Write-Verbose "$($bBody -join ',')" 
         
         $BaseUri = "https://$InstanceName.service-now.com/api/now/table/"
         $Endpoint = "kb_knowledge/$sysid"

@@ -42,8 +42,8 @@ Describe 'Parameters' {
             'ParameterSet' = 'Field'
         }
         @{
-            'ParamName' = 'text'
-            'ParamType' = 'string'
+            'ParamName' = 'Value'
+            'ParamType' = 'Object'
             'Mandatory' = 'True'
             'ParameterSet' = 'Field'
         }
@@ -236,7 +236,7 @@ Describe 'updating kb article' {
 
     Context 'Updating a single value' {
         $Expected = '123,34,116,101,120,116,34,58,34,116,101,120,116,34,125'
-        $Actual = Set-ServiceNowKB @KBSplat -Field 'text' -Text 'text' -sys_id '12345678901234567890123456789012'
+        $Actual = Set-ServiceNowKB @KBSplat -Field 'text' -Value 'text' -sys_id '12345678901234567890123456789012'
 
         it 'Body should be a byte array' {
             $actual.Body | Should -BeOfType [Byte]

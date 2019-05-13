@@ -1,4 +1,5 @@
 function New-ServiceNowAttachment {
+    [CmdLetBinding()]
     Param(
         [Parameter(Mandatory=$True)]
         [string]$InstanceName,
@@ -23,7 +24,8 @@ function New-ServiceNowAttachment {
 
     begin {
         $FileObject = Get-Item -Path $Path
-        
+        $sha256 = Get-FileHash -Path $FileObject.FullName | Select-Object -ExpandProperty Hash
+
         $UriQuery = "?table_name=$table_name&table_sys_id=$table_sys_id&file_name=$($FileObject.Name)"
         $BaseUri  = "https://$InstanceName.service-now.com/api/now/"
         $Endpoint = 'attachment/file'

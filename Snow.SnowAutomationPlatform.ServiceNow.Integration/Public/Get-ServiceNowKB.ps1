@@ -7,7 +7,7 @@ function Get-ServiceNowKB {
         [PSCredential]$Credential,
 
         [Parameter(Mandatory=$True)]
-        [ValidateSet('number','text','display_number','short_description','sys_id')]
+        [ValidateSet('number','text','display_number','short_description','sys_id','meta')]
         [string]$QueryParameter,
 
         [Parameter(Mandatory=$True)]
@@ -22,7 +22,7 @@ function Get-ServiceNowKB {
     )
 
     begin {
-        $KBQuery = "sysparm_query=$QueryParameter$QueryOperator$QueryValue"
+        $KBQuery = "sysparm_query=$QueryParameter$QueryOperator$QueryValue".ToLower()
         $KBLimit = "sysparm_limit=$Limit"
 
         $BaseUri  = "https://$InstanceName.service-now.com/api/now/table/"

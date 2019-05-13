@@ -122,7 +122,7 @@ Describe 'create new attachment' {
         }
     )
     
-    $TestFiles = $TestCases | foreach { 
+    $TestFiles = $TestCases | ForEach-Object { 
         New-Item -Path 'TestDrive:\' -Name "InFile$($_.Name)" -ItemType file
     }
 
