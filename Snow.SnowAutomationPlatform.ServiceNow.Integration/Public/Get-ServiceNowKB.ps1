@@ -22,7 +22,8 @@ function Get-ServiceNowKB {
     )
 
     begin {
-        $KBQuery = "sysparm_query=$QueryParameter$QueryOperator$QueryValue".ToLower()
+        $QueryParameter = $QueryParameter.ToLower()
+        $KBQuery = "sysparm_query=$QueryParameter$QueryOperator$QueryValue"
         $KBLimit = "sysparm_limit=$Limit"
 
         $BaseUri  = "https://$InstanceName.service-now.com/api/now/table/"
