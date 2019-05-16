@@ -5,43 +5,32 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-ServiceNowApplication
+# New-ServiceNowAttachment
 
 ## SYNOPSIS
-Searches the Service Now databse for Applications
+This command creates and attaches a file to a Service Now article.
 
 ## SYNTAX
 
 ```
-Get-ServiceNowApplication [-InstanceName] <String> [-Credential] <PSCredential> [[-Name] <String>]
- [<CommonParameters>]
+New-ServiceNowAttachment [-InstanceName] <String> [-Credential] <PSCredential> [-Path] <String>
+ [-table_name] <String> [-table_sys_id] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This CmdLet searches the Service Now databse for applications needed when creating a new KB article.
-You may include a name to search for to filter out mathing applications.
-Name is not case sensitive.
-If name is omitted this CmdLet will return all applications found.
+This command creates and attaches a file to a Service Now article. 
+It will automatically name the attachment, and return the object to be used in other updates.
+You have to pre create a kb article in order to upload an attachment.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> Get-ServiceNowApplication -Instance 'MyServiceNowInstance' -Credential $Creds -Name 'MyApplication'
+PS C:\> $ImageFullName = (Get-Item '.\images\demoImage.png').FullName
+PS C:\> New-ServiceNowAttachment -Path $ImageFullName -table_name 'kb_knowledge' -table_sys_id $KBArticleSys_id -InstanceName 'MyServiceNow' -Credential (Get-Credential)
 ```
 
-This will return any applications matching 'MyApplication'.
-'MyApplication' Will match
-'myapplication' Will match
-'ThisIsMyApplication' Will match
-'ThisIsMyApplicationAsWell' Will match
-
-### Example 2
-```powershell
-PS C:\> Get-ServiceNowApplication -Instance 'MyServiceNowInstance' -Credential $Creds
-```
-
-This will return all applications in the applications database.
+This command will create an attachent and connect to the kb article with sys_id $KBArticleSys_id.
 
 ## PARAMETERS
 
@@ -78,16 +67,47 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-Name of the application to filter the search for.
+### -Path
+Full path to the file object to attach.
+Relative paths will not work.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: Attachment
 
-Required: False
+Required: True
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -table_name
+The name of the table where the object to attach file to is created.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: TableName
+
+Required: True
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -table_sys_id
+sys_id of the article to attach file to.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: TableSysId
+
+Required: True
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -103,7 +123,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS

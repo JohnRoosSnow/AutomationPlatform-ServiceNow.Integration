@@ -1,6 +1,6 @@
 ---
-external help file: AutomationPlatform-ServiceNow.Integration-help.xml
-Module Name: AutomationPlatform-ServiceNow.Integration
+external help file: Snow.SnowAutomationPlatform.ServiceNow.Integration-help.xml
+Module Name: Snow.SnowAutomationPlatform.ServiceNow.Integration
 online version:
 schema: 2.0.0
 ---

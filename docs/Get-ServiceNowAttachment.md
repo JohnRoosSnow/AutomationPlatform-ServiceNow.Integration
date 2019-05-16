@@ -5,43 +5,30 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-ServiceNowApplication
+# Get-ServiceNowAttachment
 
 ## SYNOPSIS
-Searches the Service Now databse for Applications
+This command searches the Service Now database for an attachment.
 
 ## SYNTAX
 
 ```
-Get-ServiceNowApplication [-InstanceName] <String> [-Credential] <PSCredential> [[-Name] <String>]
- [<CommonParameters>]
+Get-ServiceNowAttachment [-InstanceName] <String> [-Credential] <PSCredential> [-QueryParameter] <String>
+ [-QueryValue] <String> [-QueryOperator] <String> [[-Limit] <UInt32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This CmdLet searches the Service Now databse for applications needed when creating a new KB article.
-You may include a name to search for to filter out mathing applications.
-Name is not case sensitive.
-If name is omitted this CmdLet will return all applications found.
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> Get-ServiceNowApplication -Instance 'MyServiceNowInstance' -Credential $Creds -Name 'MyApplication'
+PS C:\> Get-ServiceNowAttachment -Instance 'MyServiceNowInstance' -Credential $Creds -QueryParameter 'file_name' -QueryValue 'image.png' -QueryOperator '='
 ```
 
-This will return any applications matching 'MyApplication'.
-'MyApplication' Will match
-'myapplication' Will match
-'ThisIsMyApplication' Will match
-'ThisIsMyApplicationAsWell' Will match
+This will return any attachments with a file name of 'image.png'
 
-### Example 2
-```powershell
-PS C:\> Get-ServiceNowApplication -Instance 'MyServiceNowInstance' -Credential $Creds
-```
-
-This will return all applications in the applications database.
 
 ## PARAMETERS
 
@@ -78,16 +65,64 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-Name of the application to filter the search for.
+### -Limit
+Limit query to return this amount of hits.
+Default will only return one hit, may be set to any positive value (but will slow down query)
+
+```yaml
+Type: UInt32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -QueryOperator
+Perform an exact or wildcard search.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: =, LIKE
+
+Required: True
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -QueryParameter
+The parameter to search.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: file_name, sys_tags, sys_id
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -QueryValue
+The value to search for.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 2
+Required: True
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -103,7 +138,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS

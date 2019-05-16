@@ -1,6 +1,6 @@
 ---
-external help file: AutomationPlatform-ServiceNow.Integration-help.xml
-Module Name: AutomationPlatform-ServiceNow.Integration
+external help file: Snow.SnowAutomationPlatform.ServiceNow.Integration-help.xml
+Module Name: Snow.SnowAutomationPlatform.ServiceNow.Integration
 online version:
 schema: 2.0.0
 ---
@@ -126,7 +126,7 @@ The parameter to search.
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: number, text, display_number, short_description, sys_id
+Accepted values: number, text, display_number, short_description, sys_id, meta
 
 Required: True
 Position: 2
