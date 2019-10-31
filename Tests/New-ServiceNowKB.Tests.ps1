@@ -20,12 +20,12 @@ Describe 'Parameters' {
         @{
             'ParamName' = 'InstanceName'
             'ParamType' = 'String'
-            'Mandatory' = 'True'
+            'Mandatory' = 'True','True'
         }
         @{
             'ParamName' = 'Credential'
             'ParamType' = 'PSCredential'
-            'Mandatory' = 'True'
+            'Mandatory' = 'True','True'
         }
         @{
             'ParamName' = 'kb_knowledge_base'

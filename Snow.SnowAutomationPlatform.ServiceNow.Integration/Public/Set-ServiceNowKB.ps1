@@ -69,6 +69,8 @@ function Set-ServiceNowKB {
 
     }
     end {
+        # PowerShell 5.0 and earlier uses TLS 1.0 as default. We dont want that.
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12, [Net.SecurityProtocolType]::Tls11, [Net.SecurityProtocolType]::Tls
         Invoke-RestMethod @SetKBSplat
     }
 }
