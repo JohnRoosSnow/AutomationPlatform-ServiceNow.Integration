@@ -24,3 +24,8 @@ jobs:
         $ErrorActionPreference = 'Stop'
         invoke-build -File .\Build\Snow.SnowAutomationPlatform.ServiceNow.Integration.BUILD.ps1
       shell: powershell
+    
+    - uses: actions/upload-artifact@v1
+      with:
+        name: Build
+        path: ./bin/Snow.SnowAutomationPlatform.ServiceNow.Integration
