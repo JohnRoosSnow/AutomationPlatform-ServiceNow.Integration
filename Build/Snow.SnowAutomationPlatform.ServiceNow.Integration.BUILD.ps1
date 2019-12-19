@@ -54,6 +54,7 @@ task CompilePSM {
         $UpdateManifestParam['AliasesToExport'] = $PublicAlias
     }
 
+    # github actions does not have version yet, but I will heep this line here for reference
     $UpdateManifestParam['ModuleVersion'] = $env:APPVEYOR_BUILD_VERSION
 
     $ExportStrings = 'Export-ModuleMember',$PublicFunctionParam,$PublicAliasParam | Where-Object {-Not [string]::IsNullOrWhiteSpace($_)}
@@ -68,6 +69,7 @@ task MakeHelp -if (Test-Path -Path "$BuildRoot\docs") {
     New-ExternalHelp -Path ".\docs" -OutputPath "$BuildRoot\bin\$ModuleName\en-US"
 }
 
-task . Clean, TestCode, Build
+task . Clean, TestCode #, Build
 
-task Build CopyFiles, CompilePSM, MakeHelp
+# removing build as this is dependent on some appveryor features which is not yet implemented in github actions
+# task Build CopyFiles, CompilePSM, MakeHelp
