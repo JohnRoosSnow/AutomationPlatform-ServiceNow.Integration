@@ -9,6 +9,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Import required modules
+      run: Install-Module -Name InvokeBuild, PlatyPS, PowerShellGet, Pester -SkipPublisherCheck -Force
+      shell: powershell
     - name: Build
-      run: .\Build\Snow.SnowAutomationPlatform.ServiceNow.Integration.BUILD.ps1
+      run: |
+        $ErrorActionPreference = 'Stop'
+        invoke-build -File .\Build\Snow.SnowAutomationPlatform.ServiceNow.Integration.BUILD.ps1
       shell: powershell
