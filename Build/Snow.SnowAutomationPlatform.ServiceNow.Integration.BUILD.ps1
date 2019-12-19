@@ -55,7 +55,7 @@ task CompilePSM {
     }
 
     # github actions does not have version yet, but I will heep this line here for reference
-    $UpdateManifestParam['ModuleVersion'] = $env:APPVEYOR_BUILD_VERSION
+    $UpdateManifestParam['ModuleVersion'] = "1.0.$env:BUILD_NUMBER"
 
     $ExportStrings = 'Export-ModuleMember',$PublicFunctionParam,$PublicAliasParam | Where-Object {-Not [string]::IsNullOrWhiteSpace($_)}
     $ExportStrings -join ' ' | Out-File -FilePath  "$BuildRoot\bin\$ModuleName\$ModuleName.psm1" -Append -Encoding UTF8
@@ -69,7 +69,6 @@ task MakeHelp -if (Test-Path -Path "$BuildRoot\docs") {
     New-ExternalHelp -Path ".\docs" -OutputPath "$BuildRoot\bin\$ModuleName\en-US"
 }
 
-task . Clean, TestCode #, Build
+task . Clean, TestCode, Build
 
-# removing build as this is dependent on some appveryor features which is not yet implemented in github actions
-# task Build CopyFiles, CompilePSM, MakeHelp
+task Build CopyFiles, CompilePSM, MakeHelp
