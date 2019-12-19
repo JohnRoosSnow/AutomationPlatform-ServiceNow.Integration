@@ -12,7 +12,7 @@ jobs:
     - name: Import required modules
       run: Install-Module -Name InvokeBuild, PlatyPS, PowerShellGet, Pester -SkipPublisherCheck -Force
       shell: powershell
-    - name: Build
+    - name: Run Pester tests
       run: |
         $ErrorActionPreference = 'Stop'
         invoke-build -File .\Build\Snow.SnowAutomationPlatform.ServiceNow.Integration.BUILD.ps1
