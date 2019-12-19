@@ -8,6 +8,6 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Display the path
-        run: echo ${env:PATH}
+      - name: Build
+        run: .\Build\Snow.SnowAutomationPlatform.ServiceNow.Integration.BUILD.ps1
         shell: powershell
