@@ -69,7 +69,6 @@ task MakeHelp -if (Test-Path -Path "$BuildRoot\docs") {
     New-ExternalHelp -Path ".\docs" -OutputPath "$BuildRoot\bin\$ModuleName\en-US"
 }
 
-task . Clean, TestCode #, Build
+task . Clean, TestCode, Build
 
-# removing build as this is dependent on some appveryor features which is not yet implemented in github actions
-# task Build CopyFiles, CompilePSM, MakeHelp
+task Build CopyFiles, CompilePSM, MakeHelp
